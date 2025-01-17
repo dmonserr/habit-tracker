@@ -1,6 +1,7 @@
 import { Habit } from "@/app/(tabs)/Habits";
 import { Text, TouchableOpacity, View } from "react-native";
 import { IconSymbol } from "../ui/IconSymbol";
+import * as Haptics from "expo-haptics";
 
 export const HabitCard = ({
   habit,
@@ -24,7 +25,15 @@ export const HabitCard = ({
         alignItems: "center",
       }}
     >
-      <TouchableOpacity onPress={onToggle}>
+      <TouchableOpacity
+        onPress={() => {
+          onToggle();
+          if (process.env.EXPO_OS === "ios") {
+            // Add a soft haptic feedback when pressing down on the tabs.
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }
+        }}
+      >
         {habit.completed ? (
           <IconSymbol size={22} name="checkmark" color="gray" />
         ) : (

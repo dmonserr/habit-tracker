@@ -24,7 +24,6 @@ export const HabitModal = ({
       onEditHabit(selectedHabit.id, habitName);
     } else {
       onAddHabit(habitName);
-      console.log("Add ", habitName)
     }
     setHabitName("");
     onClose();

@@ -1,9 +1,14 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { IconSymbol } from "../ui/IconSymbol";
+import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export const CreateNewHabitCard = ({ openModal }: { openModal: any }) => {
+  const themedColor = useThemeColor({ light: 'gray', dark: 'white'}, 'text')
+
   return (
-    <View
+    <ThemedView
       style={{
         padding: 20,
         marginTop: 50,
@@ -12,16 +17,16 @@ export const CreateNewHabitCard = ({ openModal }: { openModal: any }) => {
         gap: 20,
       }}
     >
-      <IconSymbol size={50} name="figure.stairs.circle.fill" color="black" />
-      <Text
+      <IconSymbol size={50} name="figure.stairs.circle.fill" color={themedColor} />
+      <ThemedText
         style={{
           fontSize: 25,
           marginTop: 10,
         }}
       >
         No habits created yet
-      </Text>
-      <Text
+      </ThemedText>
+      <ThemedText
         style={{
           fontSize: 20,
           textAlign: "center",
@@ -29,7 +34,7 @@ export const CreateNewHabitCard = ({ openModal }: { openModal: any }) => {
         }}
       >
         Ready to make the first step at a better life? Get started below
-      </Text>
+      </ThemedText>
       <TouchableOpacity
         onPress={openModal}
         style={{
@@ -39,15 +44,15 @@ export const CreateNewHabitCard = ({ openModal }: { openModal: any }) => {
           paddingHorizontal: 30,
         }}
       >
-        <Text
+        <ThemedText
           style={{
             color: "white",
             fontSize: 17,
           }}
         >
           Create a new habit
-        </Text>
+        </ThemedText>
       </TouchableOpacity>
-    </View>
+    </ThemedView>
   );
 };

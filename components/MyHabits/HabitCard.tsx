@@ -2,6 +2,9 @@ import { Habit } from "@/app/(tabs)/Habits";
 import { Text, TouchableOpacity, View } from "react-native";
 import { IconSymbol } from "../ui/IconSymbol";
 import * as Haptics from "expo-haptics";
+import { ThemedView } from "../ThemedView";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedText } from "../ThemedText";
 
 export const HabitCard = ({
   habit,
@@ -14,8 +17,10 @@ export const HabitCard = ({
   onEdit: any;
   onDelete: any;
 }) => {
+  const themedColor = useThemeColor({ light: 'gray', dark: 'white'}, 'text')
+  
   return (
-    <View
+    <ThemedView
       style={{
         padding: 5,
         display: "flex",
@@ -43,20 +48,20 @@ export const HabitCard = ({
       <TouchableOpacity
         onPress={onEdit}
         style={{
-          backgroundColor: "black",
+          backgroundColor: themedColor,
           borderRadius: 15,
           padding: 15,
           paddingHorizontal: 30,
           flex: 0.9,
         }}
       >
-        <Text style={{ color: "white", fontSize: 18, fontWeight: "600" }}>
+        <ThemedText style={{ color: 'black', fontSize: 18, fontWeight: "600" }}>
           {habit.name}
-        </Text>
+        </ThemedText>
       </TouchableOpacity>
       <TouchableOpacity onPress={onDelete}>
         <IconSymbol size={22} name="x.circle" color="red" />
       </TouchableOpacity>
-    </View>
+    </ThemedView>
   );
 };

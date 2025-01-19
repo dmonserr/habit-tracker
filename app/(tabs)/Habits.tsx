@@ -1,18 +1,17 @@
 import { CreateNewHabitCard } from "@/components/MyHabits/CreateNewHabitCard";
 import { HabitCard } from "@/components/MyHabits/HabitCard";
 import { HabitModal } from "@/components/MyHabits/HabitModal";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 import React from "react";
 import { useEffect, useState } from "react";
 import {
-  Button,
   FlatList,
-  Modal,
   StyleSheet,
-  Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -133,23 +132,29 @@ const Habits = () => {
     setDate(newDate);
   };
 
+  const themedColor = useThemeColor({ light: 'black', dark: 'white'}, 'text')
+
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Habits</Text>
+    <ThemedView style={styles.container}>
+      <ThemedView style={styles.headerContainer}>
+        <ThemedText type="title" style={styles.title}>Habits</ThemedText>
         <TouchableOpacity onPress={() => setIsDisplayed(true)}>
-          <IconSymbol size={30} name="plus.circle.dashed" color="black" />
+          <IconSymbol size={30} name="plus.circle.dashed" color={themedColor} />
         </TouchableOpacity>
-      </View>
+      </ThemedView>
       <View>
         {habits.length == 0 ? (
           <CreateNewHabitCard openModal={() => setIsDisplayed(true)} />
         ) : (
           <>
             <View style={styles.dateContainer}>
-              <Button title="Previous" onPress={() => changeDate(-1)} />
-              <Text style={styles.dateText}>{date}</Text>
-              <Button title="Next" onPress={() => changeDate(1)} />
+              <TouchableOpacity onPress={() => changeDate(-1)}>
+                <IconSymbol size={22} name="arrow.backward" color={themedColor}/>
+              </TouchableOpacity>
+              <ThemedText style={styles.dateText}>{date}</ThemedText>
+              <TouchableOpacity onPress={() => changeDate(1)}>
+                <IconSymbol size={22} name="arrow.forward" color={themedColor}/>
+              </TouchableOpacity>
             </View>
             <FlatList
               data={habits}
@@ -176,13 +181,12 @@ const Habits = () => {
         selectedHabit={selectedHabit}
         onEditHabit={editHabit}
       />
-    </View>
+    </ThemedView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
     padding: 25,
     paddingTop: 50,
     height: "100%",
@@ -204,6 +208,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 20,
+    padding: 10
   },
   dateText: {
     fontSize: 18,
